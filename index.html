@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="description"
+        content="MBBuilders Inc. — Central Alabama metal erection subcontractor serving commercial and industrial construction since Find Year Later."
+    >
+    <title>MBBuilders Inc. | Metal Erection Subcontractor</title>
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+    <style>
+        /* ========================================
+           THEME COLORS
+        ======================================== */
+        :root {
+            --blue: #1479d4;
+            --blue2: #0a5da8;
+            --bg: #f7f9fb;
+            --surface: #ffffff;
+            --text: #111820;
+            --muted: #65717d;
+            --line: #dce3e9;
+            --header: rgba(255,255,255,0.92);
+            --shadow: 0 16px 50px rgba(10,40,70,0.09);
+            --safety-bg: #eaf1f7;
+            --safety-text: #111820;
+            --safety-muted: #526575;
+            --safety-tag-border: #b9cbd9;
+            --safety-accent: #1479d4;
+            --safety-decoration: #1479d4;
+        }
+        html[data-theme="dark"] {
+            --blue: #36a3ff;
+            --blue2: #0877cf;
+            --bg: #11161b;
+            --surface: #181e24;
+            --text: #f4f7f9;
+            --muted: #a5afb8;
+            --line: #2c353e;
+            --header: rgba(17,22,27,0.93);
+            --shadow: 0 18px 55px rgba(0,0,0,0.28);
+            --safety-bg: #0e1821;
+            --safety-text: #ffffff;
+            --safety-muted: #aebac5;
+            --safety-tag-border: #3a4854;
+            --safety-accent: #36a3ff;
+            --safety-decoration: #178ee8;
+        }
+        /* ========================================
+           GENERAL
+        ======================================== */
+        * {
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: Inter, Arial, sans-serif;
+            transition: background-color 0.25s, color 0.25s;
+        }
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+        button {
+            font-family: inherit;
+        }
+        section[id] {
+            scroll-margin-top: 82px;
+        }
+        /* ========================================
+           HEADER
+        ======================================== */
+        .site-header {
+            height: 82px;
+            position: fixed;
+            z-index: 20;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 clamp(22px,5vw,76px);
+            background: var(--header);
+            border-bottom: 1px solid var(--line);
+            backdrop-filter: blur(14px);
+            /* NEW: Smooth collapsing animation */
+            transition:
+                transform 0.4s ease,
+                background-color 0.25s ease,
+                border-color 0.25s ease;
+        }
+        /* ========================================
+           AUTOMATIC COLLAPSING HEADER
+        ======================================== */
+        .site-header.header-hidden {
+            transform: translateX(calc(100% + 16px));
+            pointer-events: none;
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .brand-mark {
+            display: grid;
+            place-items: center;
+            width: 42px;
+            height: 42px;
+            background: var(--blue);
+            color: white;
+            font-family: "Barlow Condensed", sans-serif;
+            font-weight: 800;
+            font-size: 21px;
+            transform: skew(-8deg);
+        }
+        .brand > span:last-child {
+            display: flex;
+            flex-direction: column;
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: 22px;
+            line-height: 0.85;
+            letter-spacing: 0.7px;
+        }
+        .brand small {
+            margin-top: 6px;
+            color: var(--muted);
+            font-size: 9px;
+            letter-spacing: 3px;
+        }
+        /* ========================================
+           NAVIGATION
+        ======================================== */
+        nav {
+            display: flex;
+            gap: 28px;
+        }
+        nav a {
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            transition: color 0.2s;
+        }
+        nav a:hover {
+            color: var(--blue);
+        }
+        .header-actions {
+            display: flex;
+            gap: 8px;
+        }
+        .theme-toggle,
+        .menu-toggle {
+            width: 42px;
+            height: 42px;
+            background: var(--surface);
+            color: var(--text);
+            border: 1px solid var(--line);
+            cursor: pointer;
+            font-size: 18px;
+        }
+        .menu-toggle {
+            display: none;
+        }
+        .moon {
+            display: none;
+        }
+        [data-theme="dark"] .moon {
+            display: inline;
+        }
+        [data-theme="dark"] .sun {
+            display: none;
+        }
+        /* ========================================
+           BUTTONS
+        ======================================== */
+        .btn {
+            display: inline-block;
+            padding: 16px 24px;
+            border: 1px solid var(--line);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.25s ease;
+        }
+        .btn.primary {
+            background: var(--blue);
+            color: white;
+            border-color: var(--blue);
+        }
+        .btn.primary:hover {
+            background: var(--blue2);
+            transform: translateY(-3px);
+        }
+        .btn.secondary {
+            background: var(--surface);
+            color: var(--text);
+        }
+        .btn.secondary:hover {
+            border-color: var(--blue);
+            color: var(--blue);
+        }
+        .btn:focus-visible,
+        nav a:focus-visible,
+        .theme-toggle:focus-visible,
+        .menu-toggle:focus-visible {
+            outline: 3px solid var(--blue);
+            outline-offset: 5px;
+        }
+        /* ========================================
+           HERO
+        ======================================== */
+        .hero {
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            min-height: 760px;
+            height: 100vh;
+            padding: 110px clamp(24px,8vw,130px);
+            background: linear-gradient(
+                115deg,
+                var(--bg) 0%,
+                var(--bg) 55%,
+                color-mix(in srgb, var(--blue) 10%, var(--bg)) 100%
+            );
+        }
+        .hero-grid {
+            position: absolute;
+            inset: 0;
+            opacity: 0.34;
+            background-image:
+                linear-gradient(var(--line) 1px, transparent 1px),
+                linear-gradient(90deg, var(--line) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: linear-gradient(90deg, black, transparent 80%);
+            pointer-events: none;
+        }
+        /* ========================================
+           HERO PHOTOGRAPH
+        ======================================== */
+        .hero-beam {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 46%;
+            height: 100%;
+            background-image:
+                linear-gradient(
+                    rgba(8, 22, 35, 0.25),
+                    rgba(8, 22, 35, 0.55)
+                ),
+                url("https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=1600&q=85");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            clip-path: polygon(
+                28% 0,
+                100% 0,
+                100% 100%,
+                0 100%
+            );
+            opacity: 1;
+            z-index: 1;
+            transition: opacity 0.25s ease;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 850px;
+        }
+        .eyebrow {
+            margin: 0 0 20px;
+            color: var(--blue);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+        .hero h1,
+        .section h2,
+        .safety h2,
+        .contact h2 {
+            margin: 0;
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: clamp(64px,9vw,130px);
+            line-height: 0.78;
+            letter-spacing: -2px;
+        }
+        .hero h1 span,
+        .section h2 span {
+            color: var(--blue);
+        }
+        .hero-copy {
+            max-width: 620px;
+            margin: 35px 0;
+            color: var(--muted);
+            font-size: 17px;
+            line-height: 1.8;
+        }
+        .hero-actions {
+            display: flex;
+            gap: 12px;
+        }
+        /* ========================================
+           HERO STATS
+        ======================================== */
+        .hero-stats {
+            position: absolute;
+            right: clamp(24px,7vw,110px);
+            bottom: 50px;
+            display: flex;
+            background: var(--surface);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--line);
+            z-index: 3;
+        }
+        .hero-stats div {
+            padding: 18px 28px;
+            border-right: 1px solid var(--line);
+        }
+        .hero-stats div:last-child {
+            border: 0;
+        }
+        .hero-stats strong {
+            display: block;
+            color: var(--blue);
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: 25px;
+            font-weight: 700;
+        }
+        .hero-stats span {
+            color: var(--muted);
+            font-size: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        /* ========================================
+           GENERAL SECTIONS
+        ======================================== */
+        .section {
+            position: relative;
+            padding: 120px clamp(24px,8vw,130px);
+        }
+        .section-label {
+            position: absolute;
+            right: clamp(24px,5vw,80px);
+            top: 50px;
+            color: var(--muted);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+        .section h2 {
+            font-size: clamp(52px,6vw,88px);
+            line-height: 0.9;
+        }
+        .rule {
+            width: 50px;
+            height: 2px;
+            margin: 32px 0;
+            background: var(--blue);
+        }
+        /* ========================================
+           ABOUT
+        ======================================== */
+        .about-layout {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 9vw;
+        }
+        .about-copy {
+            padding-top: 35px;
+        }
+        .about-copy p {
+            color: var(--muted);
+            font-size: 15px;
+            line-height: 1.85;
+        }
+        .tagline {
+            color: var(--text) !important;
+            font-weight: 700 !important;
+        }
+        /* ========================================
+           SERVICES
+        ======================================== */
+        .services {
+            background: var(--surface);
+        }
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            margin-top: 60px;
+            border-left: 1px solid var(--line);
+            border-top: 1px solid var(--line);
+        }
+        .service-card {
+            position: relative;
+            min-height: 280px;
+            padding: 32px;
+            border-right: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+            transition: all 0.25s ease;
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+            background: var(--bg);
+            z-index: 2;
+        }
+        .service-card > span {
+            position: absolute;
+            right: 24px;
+            top: 22px;
+            color: var(--muted);
+            font-size: 10px;
+        }
+        .icon {
+            margin-bottom: 35px;
+            color: var(--blue);
+            font-size: 34px;
+        }
+        /* SVG service icons */
+        .service-card .icon svg {
+            display: block;
+            width: 38px;
+            height: 38px;
+            color: var(--blue);
+            transition: transform 0.25s ease;
+        }
+        .service-card:hover .icon svg { transform: scale(1.12); }
+        .service-card h3 {
+            margin: 0 0 12px;
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: 27px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .service-card p {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+        /* ========================================
+           PROJECTS
+        ======================================== */
+        .project-head {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 30px;
+        }
+        .project-catalog-button { flex-shrink: 0; white-space: nowrap; }
+        .project-head > p {
+            max-width: 340px;
+            color: var(--muted);
+            font-size: 15px;
+            line-height: 1.85;
+        }
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 16px;
+            margin-top: 55px;
+        }
+        .project-placeholder {
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: end;
+            height: 420px;
+            padding: 24px;
+            background: linear-gradient(
+                145deg,
+                color-mix(in srgb, var(--blue) 12%, var(--surface)),
+                var(--surface)
+            );
+            border: 1px solid var(--line);
+        }
+        .project-placeholder::before {
+            content: "";
+            position: absolute;
+            width: 150%;
+            height: 70px;
+            top: 45%;
+            left: -20%;
+            background: var(--line);
+            transform: rotate(-20deg);
+        }
+        .project-placeholder div {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 3px;
+        }
+        .project-placeholder span {
+            position: relative;
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: 21px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        /* ========================================
+           CAREER
+        ======================================== */
+        .career {
+            background: var(--surface);
+        }
+        .career-layout {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 7vw;
+            align-items: start;
+        }
+        .career-copy {
+            max-width: 600px;
+            margin-top: 28px;
+            color: var(--muted);
+            font-size: 15px;
+            line-height: 1.85;
+        }
+        .career-openings {
+            padding: 32px;
+            background: var(--bg);
+            border: 1px solid var(--line);
+        }
+        .career-openings h3 {
+            margin: 0 0 18px;
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: 27px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .career-openings p {
+            color: var(--muted);
+            font-size: 15px;
+            line-height: 1.85;
+        }
+        .career-button {
+            display: inline-block;
+            margin-top: 20px;
+        }
+        .career-button:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+        /* ========================================
+           SAFETY - LIGHT/DARK MODE
+        ======================================== */
+        .safety {
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            min-height: 650px;
+            padding: 100px clamp(24px,8vw,130px);
+            background: var(--safety-bg);
+            color: var(--safety-text);
+            transition:
+                background-color 0.25s ease,
+                color 0.25s ease;
+        }
+        .safety::after {
+            content: "";
+            position: absolute;
+            right: -8%;
+            top: -30%;
+            width: 45%;
+            height: 150%;
+            border: 80px solid var(--safety-decoration);
+            opacity: 0.12;
+            transform: rotate(25deg);
+            pointer-events: none;
+            transition: border-color 0.25s ease;
+        }
+        .safety-content {
+            position: relative;
+            z-index: 2;
+            max-width: 750px;
+        }
+        .safety h2 {
+            font-size: clamp(60px,8vw,110px);
+            color: var(--safety-text);
+        }
+        .safety h2 span {
+            color: var(--safety-accent);
+        }
+        .safety .eyebrow {
+            color: var(--safety-accent);
+        }
+        .safety-content > p:not(.eyebrow) {
+            max-width: 620px;
+            color: var(--safety-muted);
+            line-height: 1.8;
+            transition: color 0.25s ease;
+        }
+        .safety-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 28px;
+        }
+        .safety-tags span {
+            padding: 10px 14px;
+            border: 1px solid var(--safety-tag-border);
+            color: var(--safety-text);
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition:
+                border-color 0.25s ease,
+                color 0.25s ease;
+        }
+        .safety-plan {
+            margin-top: 30px;
+        }
+        /* ========================================
+           CONTACT
+        ======================================== */
+        .contact {
+            padding: 110px clamp(24px,8vw,130px);
+            background: var(--blue);
+            color: white;
+        }
+        .contact .eyebrow {
+            color: white;
+            opacity: 0.75;
+        }
+        .contact h2 {
+            font-size: clamp(58px,7vw,95px);
+        }
+        .contact h2 span {
+            color: #cce9ff;
+        }
+        .contact-inner > p:not(.eyebrow) {
+            opacity: 0.8;
+        }
+        .contact-cards {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            margin-top: 45px;
+            border: 1px solid rgba(255,255,255,0.28);
+        }
+        .contact-cards > * {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 25px;
+            border-right: 1px solid rgba(255,255,255,0.28);
+        }
+        .contact-cards > *:last-child {
+            border: 0;
+        }
+        .contact-cards small {
+            font-size: 9px;
+            letter-spacing: 2px;
+            opacity: 0.7;
+        }
+        .contact-cards strong {
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+        }
+        .contact-cards span {
+            font-size: 10px;
+            opacity: 0.65;
+        }
+        /* ========================================
+           FOOTER
+        ======================================== */
+        footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 25px;
+            padding: 35px clamp(24px,5vw,76px);
+            background: var(--surface);
+            border-top: 1px solid var(--line);
+        }
+        footer p {
+            color: var(--muted);
+            font-size: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        /* ========================================
+           SCROLL ANIMATIONS
+        ======================================== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(22px);
+            transition:
+                opacity 0.65s ease,
+                transform 0.65s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: none;
+        }
+        /* ========================================
+           TABLET RESPONSIVENESS
+        ======================================== */
+        @media (max-width: 900px) {
+            nav {
+                display: none;
+                position: absolute;
+                top: 82px;
+                left: 0;
+                right: 0;
+                padding: 25px;
+                background: var(--surface);
+                border-bottom: 1px solid var(--line);
+                flex-direction: column;
+            }
+            nav.open {
+                display: flex;
+            }
+            .menu-toggle {
+                display: block;
+            }
+            .hero-beam {
+                width: 55%;
+                opacity: 0.3;
+            }
+            .hero-stats {
+                left: 24px;
+                right: 24px;
+                bottom: 25px;
+            }
+            .hero-stats div {
+                flex: 1;
+                padding: 14px;
+            }
+            .about-layout,
+            .career-layout {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .service-grid {
+                grid-template-columns: repeat(2,1fr);
+            }
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+            .project-placeholder {
+                height: 300px;
+            }
+            .project-head {
+                display: block;
+            }
+            .contact-cards {
+                grid-template-columns: 1fr;
+            }
+            .contact-cards > * {
+                border-right: 0;
+                border-bottom: 1px solid rgba(255,255,255,0.28);
+            }
+            footer {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+        /* ========================================
+           MOBILE RESPONSIVENESS
+        ======================================== */
+        @media (max-width: 560px) {
+            .site-header {
+                height: 70px;
+            }
+            nav {
+                top: 70px;
+            }
+            section[id] {
+                scroll-margin-top: 70px;
+            }
+            .hero {
+                padding-top: 90px;
+            }
+            .hero h1 {
+                font-size: 65px;
+            }
+            .hero-copy {
+                font-size: 14px;
+            }
+            .hero-beam {
+                width: 75%;
+                opacity: 0.15;
+            }
+            .hero-stats {
+                display: none;
+            }
+            .hero-actions {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .section {
+                padding-top: 90px;
+                padding-bottom: 90px;
+            }
+            .service-grid {
+                grid-template-columns: 1fr;
+            }
+            .contact {
+                padding-top: 80px;
+                padding-bottom: 80px;
+            }
+        }
+        /* ========================================
+           REDUCED MOTION ACCESSIBILITY
+        ======================================== */
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+            .reveal {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+            .site-header {
+                transition: none;
+            }
+        }
+
+        /* Smooth right-slide collapse. Do not use visibility:hidden here:
+           it hides the header immediately before the slide can be seen. */
+        .site-header {
+            transition:
+                transform 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+                background-color 0.25s ease,
+                border-color 0.25s ease;
+        }
+        .site-header.header-hidden {
+            transform: translateX(100%);
+            pointer-events: none;
+        }
+        .header-reopen {
+            position: fixed;
+            z-index: 30;
+            top: 17px;
+            right: 20px;
+            width: 48px;
+            height: 48px;
+            border: 1px solid var(--blue);
+            background: var(--blue);
+            color: #fff;
+            font-size: 22px;
+            cursor: pointer;
+            border-radius: 4px;
+            box-shadow: var(--shadow);
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity .25s ease, visibility .25s ease;
+        }
+        .header-reopen.is-visible {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        .header-reopen:focus-visible { outline: 3px solid var(--text); outline-offset: 3px; }
+        @media (max-width: 560px) {
+            .header-reopen { top: 11px; right: 15px; }
+        }
+
+        /* Footer company documents link */
+        .footer-brand-group {
+            display: flex;
+            align-items: center;
+            gap: clamp(18px, 3vw, 42px);
+            flex-wrap: wrap;
+        }
+        .footer-documents-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            color: var(--blue);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border-bottom: 1px solid transparent;
+            padding: 10px 0;
+            transition: border-color .2s ease, transform .2s ease;
+        }
+        .footer-documents-link:hover {
+            border-bottom-color: var(--blue);
+            transform: translateX(3px);
+        }
+        .footer-documents-link:focus-visible {
+            outline: 3px solid var(--blue);
+            outline-offset: 4px;
+        }
+        @media (max-width: 900px) {
+            .footer-brand-group { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+    <!-- ========================================
+         HEADER
+    ======================================== -->
+    <header class="site-header" id="siteHeader">
+        <a
+            href="#home"
+            class="brand"
+            aria-label="MBBuilders home"
+        >
+            <span class="brand-mark">
+                MBB
+            </span>
+            <span>
+                <strong>
+                    MBBUILDERS
+                </strong>
+                <small>
+                    INC.
+                </small>
+            </span>
+        </a>
+        <!-- NAVIGATION -->
+        <nav id="nav" aria-label="Primary navigation">
+            <a href="#about">About</a>
+            <a href="#services">Services</a>
+            <a href="#projects">Projects</a>
+            <a href="#career">Career</a>
+            <a href="#safety">Safety</a>
+            <a href="#contact">Contact</a>
+        </nav>
+        <div class="header-actions">
+            <button
+                class="theme-toggle"
+                id="themeToggle"
+                type="button"
+                aria-label="Toggle dark mode"
+            >
+                <span class="sun">☀</span>
+                <span class="moon">☾</span>
+            </button>
+            <button
+                class="menu-toggle"
+                id="menuToggle"
+                type="button"
+                aria-label="Open navigation"
+                aria-expanded="false"
+                aria-controls="nav"
+            >
+                ☰
+            </button>
+        </div>
+    </header>
+    <!-- Always-accessible control for reopening the collapsed header -->
+    <button class="header-reopen" id="headerReopen" type="button"
+            aria-label="Open navigation header" aria-controls="siteHeader"
+            aria-expanded="false">☰</button>
+    <main>
+        <!-- ========================================
+             HOME
+        ======================================== -->
+        <section class="hero" id="home">
+            <div class="hero-grid"></div>
+            <!-- HERO PHOTOGRAPH -->
+            <div
+                class="hero-beam"
+                aria-hidden="true"
+            ></div>
+            <div class="hero-content reveal">
+                <p class="eyebrow">
+                    CENTRAL ALABAMA &bull; EST. Find Year Later
+                </p>
+                <h1>
+                    MBBUILDERS
+                    <br>
+                    <span>INC.</span>
+                </h1>
+                <p class="hero-copy">
+                    Commercial and industrial metal erection
+                    performed with the experience, equipment,
+                    and field-first mindset it takes to keep
+                    your project moving.
+                </p>
+                <div class="hero-actions">
+                    <a href="#services" class="btn primary">
+                        Our Services →
+                    </a>
+                    <a href="#contact" class="btn secondary">
+                        Contact Us
+                    </a>
+                </div>
+            </div>
+            <div class="hero-stats reveal">
+                <div>
+                    <strong>Find Year Later</strong>
+                    <span>Established</span>
+                </div>
+                <div>
+                    <strong>?</strong>
+                    <span>Years in the Field</span>
+                </div>
+                <div>
+                    <strong>AL</strong>
+                    <span>Central Alabama</span>
+                </div>
+            </div>
+        </section>
+        <!-- ========================================
+             01 - ABOUT
+        ======================================== -->
+        <section class="section about" id="about">
+            <div class="section-label">
+                01 / ABOUT
+            </div>
+            <div class="about-layout">
+                <div class="reveal">
+                    <p class="eyebrow">
+                        BUILT IN THE FIELD
+                    </p>
+                    <h2>
+                        A METAL ERECTION CREW
+                        <br>
+                        YOU CAN
+                        <span>COUNT ON.</span>
+                    </h2>
+                </div>
+                <div class="about-copy reveal">
+                    <p>
+                        Since Find Year Later,
+                        <strong>MBBuilders Inc.</strong>
+                        has provided metal erection services
+                        for commercial and industrial construction
+                        across Central Alabama.
+                        We understand that a subcontractor's
+                        job is bigger than completing a scope—it
+                        is showing up prepared, coordinating
+                        with the contractor, working safely,
+                        and keeping the schedule moving.
+                    </p>
+                    <p>
+                        Our field experience, company-operated
+                        equipment, and hands-on approach allow
+                        us to take on demanding erection projects
+                        while maintaining the responsiveness
+                        general contractors expect from their
+                        trade partners.
+                    </p>
+                    <div class="rule"></div>
+                    <p class="tagline">
+                        Reliable crews. Capable equipment.
+                        Straightforward execution.
+                    </p>
+                </div>
+            </div>
+        </section>
+        <!-- ========================================
+             02 - SERVICES
+        ======================================== -->
+        <section class="section services" id="services">
+            <div class="section-label">02 / SERVICES</div>
+            <p class="eyebrow">WHAT WE DO</p>
+            <h2 class="reveal">METAL ERECTION.<br><span>THAT'S OUR LANE.</span></h2>
+            <div class="service-grid">
+                <!-- STRUCTURAL STEEL -->
+                <article class="service-card reveal">
+                    <span>01</span>
+                    <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 3h16v4H4zM10 7v10M14 7v10M4 17h16v4H4z"/></svg></div>
+                    <h3>Structural Steel</h3>
+                    <p>Erection of structural steel framing and related components for commercial and industrial projects.</p>
+                </article>
+                <!-- PRE-ENGINEERED METAL BUILDINGS -->
+                <article class="service-card reveal">
+                    <span>02</span>
+                    <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21V9l9-6 9 6v12M3 9h18M8 21v-8h8v8M12 3v6"/></svg></div>
+                    <h3>Pre-Engineered Metal Buildings</h3>
+                    <p>Complete PEMB erection, from primary framing and secondary steel through building envelope installation.</p>
+                </article>
+                <!-- ROOF AND WALL SYSTEMS -->
+                <article class="service-card reveal">
+                    <span>03</span>
+                    <div class="icon">▥</div>
+                    <h3>Roof &amp; Wall Systems</h3>
+                    <p>Metal roof and wall panel installation with attention to alignment, weather-tightness, and finish.</p>
+                </article>
+                <!-- DOORS AND ACCESSORIES -->
+                <article class="service-card reveal">
+                    <span>04</span>
+                    <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="1"/><path d="M9 2v20"/><circle cx="15" cy="12" r=".8" fill="currentColor" stroke="none"/></svg></div>
+                    <h3>Doors &amp; Accessories</h3>
+                    <p>Installation of walk doors, overhead doors, wall fans, louvers, and related building accessories.</p>
+                </article>
+                <!-- TRIMMING -->
+                <article class="service-card reveal">
+                    <span>05</span>
+                    <div class="icon"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2 C8 7 8 12 9 17 L9.5 20 C11 22 15 25 20 28 L23 30 C25 29 28 25 30 21 L20 14 C19 12 19 6 18 2"/></svg></div>
+                    <h3>Trimming</h3>
+                    <p>Installation of metal trim around doors, wall fans, and other openings, along with gutters, gable trim, and related building finishes.</p>
+                </article>
+                <!-- FIELD FABRICATION -->
+                <article class="service-card reveal">
+                    <span>06</span>
+                    <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21l8-8M7 21l6-6M11 13l2-2M15 3v4M21 9h-4M18 4l-3 3M20 15l-4-2M9 5l2 4M14 9l1-2M13 13l2 2"/></svg></div>
+                    <h3>Field Fabrication</h3>
+                    <p>On-site cutting, fitting, minor welding, and practical field solutions needed to complete the erection scope.</p>
+                </article>
+            </div>
+        </section>
+        <!-- ========================================
+             03 - PROJECTS
+        ======================================== -->
+        <section class="section projects" id="projects">
+            <div class="section-label">
+                03 / PROJECTS
+            </div>
+            <div class="project-head">
+                <div>
+                    <p class="eyebrow">
+                        OUR WORK
+                    </p>
+                    <h2>
+                        BUILT ACROSS
+                        <br>
+                        <span>CENTRAL ALABAMA.</span>
+                    </h2>
+                </div>
+                <a href="projects.html" class="btn primary project-catalog-button">View Project Catalog →</a>
+            </div>
+            <div class="project-grid">
+                <div class="project-placeholder reveal">
+                    <div>PROJECT PHOTO</div>
+                    <span>
+                        Commercial Metal Erection
+                    </span>
+                </div>
+                <div class="project-placeholder reveal">
+                    <div>PROJECT PHOTO</div>
+                    <span>
+                        Pre-Engineered Metal Building
+                    </span>
+                </div>
+                <div class="project-placeholder reveal">
+                    <div>PROJECT PHOTO</div>
+                    <span>
+                        Industrial Steel Erection
+                    </span>
+                </div>
+            </div>
+        </section>
+        <!-- ========================================
+             04 - CAREER
+        ======================================== -->
+        <section
+            class="section career"
+            id="career"
+            aria-labelledby="career-heading"
+        >
+            <div class="section-label">
+                04 / CAREER
+            </div>
+            <div class="career-layout">
+                <div class="reveal">
+                    <p class="eyebrow">
+                        JOIN OUR CREW
+                    </p>
+                    <h2 id="career-heading">
+                        BUILD YOUR CAREER.
+                        <br>
+                        <span>BUILD WITH US.</span>
+                    </h2>
+                    <p class="career-copy">
+                        Explore opportunities with
+                        MBBuilders Inc. and help build
+                        commercial and industrial projects
+                        across Central Alabama.
+                    </p>
+                </div>
+                <div class="career-openings reveal">
+                    <h3>
+                        Join Our Team
+                    </h3>
+                    <p>
+                        Interested in building a career
+                        with MBBuilders Inc.?
+                        Explore opportunities in commercial
+                        and industrial construction
+                        throughout Central Alabama.
+                    </p>
+                    <a
+                        href="careers.html"
+                        class="btn primary career-button"
+                    >
+                        View Job Openings →
+                    </a>
+                </div>
+            </div>
+        </section>
+        <!-- ========================================
+             05 - SAFETY
+        ======================================== -->
+        <section class="safety" id="safety">
+            <div class="safety-content reveal">
+                <p class="eyebrow">
+                    SAFETY IS PART OF THE SCOPE
+                </p>
+                <h2>
+                    WORK HIGH.
+                    <br>
+                    <span>WORK SMART.</span>
+                </h2>
+                <p>
+                    Metal erection demands disciplined crews.
+                    We emphasize fall protection,
+                    rigging practices, equipment awareness,
+                    hot-work controls, and jobsite
+                    communication as part of everyday
+                    field operations.
+                </p>
+                <div class="safety-tags">
+                    <span>Fall Protection</span>
+                    <span>Rigging</span>
+                    <span>Hot Work</span>
+                    <span>Equipment Safety</span>
+                </div>
+                <div class="safety-plan">
+                    <a
+                        href="MBB_Safety_Manual_Basic.docx.pdf"
+                        class="btn primary"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        View Our Safety Plan
+                    </a>
+                </div>
+            </div>
+        </section>
+        <!-- ========================================
+             06 - CONTACT
+        ======================================== -->
+        <section class="contact" id="contact">
+            <div class="contact-inner reveal">
+                <p class="eyebrow">
+                    LET'S TALK ABOUT THE JOB
+                </p>
+                <h2>
+                    NEED A METAL ERECTION
+                    <br>
+                    <span>SUBCONTRACTOR?</span>
+                </h2>
+                <p>
+                    For bid invitations, project coordination,
+                    or company information, contact
+                    MBBuilders Inc.
+                </p>
+                <div class="contact-cards">
+                    <div>
+                        <small>PHONE</small>
+                        <strong>
+                            ADD NUMBER LATER
+                        </strong>
+                        <span>
+                            Contact information coming soon
+                        </span>
+                    </div>
+                    <div>
+                        <small>EMAIL</small>
+                        <strong>
+                            ADD EMAIL LATER
+                        </strong>
+                        <span>
+                            Contact information coming soon
+                        </span>
+                    </div>
+                    <div>
+                        <small>SERVICE AREA</small>
+                        <strong>
+                            Central Alabama
+                        </strong>
+                        <span>
+                            Commercial &amp; Industrial
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- ========================================
+         FOOTER
+    ======================================== -->
+    <footer>
+        <div class="footer-brand-group">
+            <div class="brand">
+                <span class="brand-mark">MBB</span>
+                <span><strong>MBBUILDERS</strong><small>INC.</small></span>
+            </div>
+            <a class="footer-documents-link" href="documents.html" aria-label="View MBBuilders company documents">
+                Company Documents <span aria-hidden="true">↗</span>
+            </a>
+        </div>
+        <p>Metal Erection Subcontractor &bull; Central Alabama &bull; Since Find Year Later</p>
+        <p>&copy; <span id="year"></span> MBBuilders Inc.</p>
+    </footer>
+    <script>
+        // ========================================
+        // ELEMENT REFERENCES
+        // ========================================
+        const root = document.documentElement;
+        const themeButton =
+            document.getElementById("themeToggle");
+        const menuButton =
+            document.getElementById("menuToggle");
+        const navigation =
+            document.getElementById("nav");
+        const siteHeader =
+            document.getElementById("siteHeader");
+        const aboutSection =
+            document.getElementById("about");
+        // ========================================
+        // THEME MANAGEMENT
+        // ========================================
+        const savedTheme =
+            localStorage.getItem("mb-theme");
+        // Restore saved theme or system preference.
+        if (
+            savedTheme === "light" ||
+            savedTheme === "dark"
+        ) {
+            root.dataset.theme = savedTheme;
+        } else if (
+            window.matchMedia(
+                "(prefers-color-scheme: dark)"
+            ).matches
+        ) {
+            root.dataset.theme = "dark";
+        }
+        // Toggle light and dark modes.
+        themeButton.addEventListener("click", () => {
+            const nextTheme =
+                root.dataset.theme === "dark"
+                    ? "light"
+                    : "dark";
+            root.dataset.theme = nextTheme;
+            localStorage.setItem(
+                "mb-theme",
+                nextTheme
+            );
+        });
+        // ========================================
+        // MOBILE NAVIGATION
+        // ========================================
+        menuButton.addEventListener("click", () => {
+            const isOpen =
+                navigation.classList.toggle("open");
+            menuButton.setAttribute(
+                "aria-expanded",
+                String(isOpen)
+            );
+        });
+        // Close mobile navigation after clicking a link.
+        navigation.querySelectorAll("a").forEach((link) => {
+            link.addEventListener("click", () => {
+                navigation.classList.remove("open");
+                menuButton.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+            });
+        });
+        // ========================================
+        // COLLAPSE HEADER TO THE RIGHT AFTER ABOUT
+        // ========================================
+        const reopenButton = document.getElementById("headerReopen");
+        let manuallyExpanded = false;
+        function setHeaderCollapsed(collapsed) {
+            siteHeader.classList.toggle("header-hidden", collapsed);
+            reopenButton.classList.toggle("is-visible", collapsed || manuallyExpanded);
+            reopenButton.textContent = collapsed ? "☰" : "✕";
+            reopenButton.setAttribute("aria-label", collapsed ? "Open navigation header" : "Collapse navigation header");
+            reopenButton.setAttribute("aria-expanded", String(!collapsed));
+            siteHeader.setAttribute("aria-hidden", String(collapsed));
+            if (collapsed) {
+                navigation.classList.remove("open");
+                menuButton.setAttribute("aria-expanded", "false");
+            }
+        }
+        function updateHeaderVisibility() {
+            const pastAbout = aboutSection.getBoundingClientRect().bottom <= 0;
+            if (!pastAbout) {
+                manuallyExpanded = false;
+                setHeaderCollapsed(false);
+                reopenButton.classList.remove("is-visible");
+            } else {
+                setHeaderCollapsed(!manuallyExpanded);
+            }
+        }
+        reopenButton.addEventListener("click", () => {
+            manuallyExpanded = !manuallyExpanded;
+            updateHeaderVisibility();
+        });
+        window.addEventListener("scroll", updateHeaderVisibility, { passive: true });
+        window.addEventListener("resize", updateHeaderVisibility);
+        window.addEventListener("load", updateHeaderVisibility);
+        updateHeaderVisibility();
+        // ========================================
+        // SCROLL REVEAL ANIMATIONS
+        // ========================================
+        if ("IntersectionObserver" in window) {
+            const revealObserver =
+                new IntersectionObserver(
+                    (entries) => {
+                        entries.forEach((entry) => {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add(
+                                    "visible"
+                                );
+                                revealObserver.unobserve(
+                                    entry.target
+                                );
+                            }
+                        });
+                    },
+                    {
+                        threshold: 0.12
+                    }
+                );
+            document.querySelectorAll(".reveal").forEach(
+                (element) => {
+                    revealObserver.observe(element);
+                }
+            );
+        } else {
+            document.querySelectorAll(".reveal").forEach(
+                (element) => {
+                    element.classList.add("visible");
+                }
+            );
+        }
+        // ========================================
+        // COPYRIGHT YEAR
+        // ========================================
+        document.getElementById("year").textContent =
+            new Date().getFullYear();
+    </script>
+</body>
+</html>
