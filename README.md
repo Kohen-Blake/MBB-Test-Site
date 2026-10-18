@@ -1,7 +1,9 @@
 # MBB-Test-Site
 https://kohen-blake.github.io/MBB-Test-Site/
 
-A draft of a personal website for a business
+A draft of a website for a metal subcontracting business
+
+<b> This is not a finished site and is currently just being used as a place to test things for a main website, it does not have any security implementations or real functionality. </b>
 
 
 # ToDo
@@ -11,6 +13,7 @@ A draft of a personal website for a business
 * [✓] <del>Add auto updating established year.</del>
 * Add phone number and email later.
 * Fix the document buttons not working and taking you to a error 404 page.
+* Make it so that you can just upload the files instead of having to put a path to it
 
 
 # Far Future Updates

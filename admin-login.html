@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MBBuilders administration portal sign-in page.">
+    <title>Sign In | MBB Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            color-scheme: light;
+            --blue: #1479d4;
+            --blue-hover: #0a5da8;
+            --bg: #f7f9fb;
+            --surface: #fff;
+            --text: #111820;
+            --muted: #65717d;
+            --line: #dce3e9;
+            --header: rgba(255,255,255,.94);
+            --shadow: 0 16px 50px rgba(10,40,70,.09);
+        }
+        html[data-theme="dark"] {
+            color-scheme: dark;
+            --blue: #36a3ff;
+            --blue-hover: #0877cf;
+            --bg: #11161b;
+            --surface: #181e24;
+            --text: #f4f7f9;
+            --muted: #a5afb8;
+            --line: #2c353e;
+            --header: rgba(17,22,27,.94);
+            --shadow: 0 18px 55px rgba(0,0,0,.28);
+        }
+        * { box-sizing: border-box; }
+        body { margin: 0; min-height: 100vh; font-family: Inter, Arial, sans-serif; background: var(--bg); color: var(--text); }
+        button, a { font: inherit; }
+        a { color: inherit; text-decoration: none; }
+        .site-header { height: 82px; display: flex; align-items: center; justify-content: space-between; padding: 0 clamp(22px,5vw,76px); border-bottom: 1px solid var(--line); background: var(--header); }
+        .brand { display: flex; align-items: center; gap: 10px; }
+        .brand-mark {display: grid; place-items: center; width: 42px; height: 42px; background: var(--blue); color: white; font-family: "Barlow Condensed", sans-serif; font-weight: 800; font-size: 21px; transform: skew(-8deg); }
+        .brand > span:last-child {
+            display: flex;
+            flex-direction: column;
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: 22px;
+            line-height: 0.85;
+            letter-spacing: 0.7px;
+        }
+        .brand small {
+            margin-top: 6px;
+            color: var(--muted);
+            font-size: 9px;
+            letter-spacing: 3px;
+        }
+        .header-actions { display: flex; align-items: center; gap: 20px; }
+        .public-link { font-size: 12px; font-weight: 700; color: var(--muted); }
+        .public-link:hover { color: var(--blue); }
+        .theme-toggle { width: 42px; height: 42px; border: 1px solid var(--line); background: var(--surface); color: var(--text); font-size: 19px; cursor: pointer; }
+        .theme-toggle:focus-visible, a:focus-visible, button:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+        .page { min-height: calc(100vh - 142px); display: grid; place-items: center; padding: 60px 20px; position: relative; overflow: hidden; }
+        .page::before { content: ""; position: absolute; inset: 0; opacity: .34; pointer-events: none; background-image: linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px); background-size: 60px 60px; mask-image: linear-gradient(90deg,#000,transparent 85%); }
+        .login { width: min(100%, 510px); position: relative; z-index: 1; }
+        .eyebrow { color: var(--blue); font-size: 11px; font-weight: 800; letter-spacing: 3px; margin: 0 0 15px; }
+        h1 { margin: 0 0 22px; font: 800 clamp(62px,10vw,90px)/.84 "Barlow Condensed", sans-serif; letter-spacing: -1px; }
+        h1 span { color: var(--blue); }
+        .intro { font-size: 14px; line-height: 1.75; color: var(--muted); margin: 0 0 30px; }
+        .card { padding: clamp(24px,5vw,40px); background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow); }
+        .card h2 { margin: 0 0 10px; font: 700 28px "Barlow Condensed", sans-serif; text-transform: uppercase; }
+        .card p { color: var(--muted); font-size: 13px; line-height: 1.75; margin: 0 0 25px; }
+        .field { margin-bottom: 20px; }
+        .field label { display: block; margin-bottom: 9px; font-size: 11px; font-weight: 800; letter-spacing: 1.3px; text-transform: uppercase; }
+        .field input { width: 100%; min-height: 48px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 0; background: var(--bg); color: var(--text); font: inherit; font-size: 14px; }
+        .field input:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+        .password-wrap { position: relative; }
+        .password-wrap input { padding-right: 75px; }
+        .show-password { position: absolute; right: 7px; top: 7px; height: 34px; padding: 0 9px; border: 0; background: transparent; color: var(--blue); font-size: 11px; font-weight: 800; cursor: pointer; }
+        .sign-in-btn { width: 100%; padding: 17px 18px; border: 1px solid var(--blue); background: var(--blue); color: #fff; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; }
+        .sign-in-btn:hover { background: var(--blue-hover); }
+        .notice { display: none; margin-top: 18px; padding: 14px; background: var(--bg); border-left: 3px solid var(--blue); color: var(--text); font-size: 13px; line-height: 1.65; }
+        .notice.visible { display: block; }
+        .info { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; line-height: 1.7; }
+        footer { min-height: 60px; display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 15px clamp(22px,5vw,76px); border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
+        @media(max-width:550px) { .public-link { display: none; } footer { flex-direction: column; align-items: flex-start; } }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="https://kohen-blake.github.io/MBB-Test-Site/" aria-label="MBBuilders public website">
+            <span class="brand-mark">MBB</span>
+            <span><strong>MBBUILDERS</strong><small>INC.</small></span>
+        </a>
+        <div class="header-actions">
+            <a class="public-link" href="https://kohen-blake.github.io/MBB-Test-Site/">VIEW PUBLIC WEBSITE ↗</a>
+            <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light and dark mode" title="Toggle theme">◐</button>
+        </div>
+    </header>
+
+    <main class="page">
+        <section class="login" aria-labelledby="loginTitle">
+            <p class="eyebrow">MBBUILDERS INC. / SECURE ACCESS</p>
+            <h1 id="loginTitle">ADMIN<br><span>SIGN IN.</span></h1>
+            <p class="intro">Project management, job listings, and hiring tools for authorized MBBuilders administrators.</p>
+            <div class="card">
+                <h2>Administrator access</h2>
+                <p>Enter your MBB Admin username and password. Each authorized administrator will have their own account.</p>
+                <form id="loginForm" autocomplete="on">
+                    <div class="field">
+                        <label for="username">Username</label>
+                        <input id="username" name="username" type="text" autocomplete="username" required placeholder="Enter your username" maxlength="100">
+                    </div>
+                    <div class="field">
+                        <label for="password">Password</label>
+                        <div class="password-wrap">
+                            <input id="password" name="password" type="password" autocomplete="current-password" required placeholder="Enter your password">
+                            <button class="show-password" id="showPassword" type="button" aria-label="Show password">SHOW</button>
+                        </div>
+                    </div>
+                    <button class="sign-in-btn" type="submit">Sign In →</button>
+                </form>
+                <div class="notice" id="authNotice" role="status" aria-live="polite">
+                    Incorrect username or password. Please try again.
+                </div>
+                <div class="info">Demo access only. This page uses a temporary browser-side login and is not secure for real administrative use.</div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <span>© <span id="year"></span> MBBUILDERS INC.</span>
+        <span>ADMINISTRATION PORTAL · CENTRAL ALABAMA</span>
+    </footer>
+    <script>
+        const root = document.documentElement;
+        const savedTheme = localStorage.getItem('mb-theme');
+        if (savedTheme === 'light' || savedTheme === 'dark') {
+            root.dataset.theme = savedTheme;
+        } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            root.dataset.theme = 'dark';
+        }
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+            localStorage.setItem('mb-theme', root.dataset.theme);
+        });
+        const passwordInput = document.getElementById('password');
+        const showPassword = document.getElementById('showPassword');
+        showPassword.addEventListener('click', () => {
+            const visible = passwordInput.type === 'password';
+            passwordInput.type = visible ? 'text' : 'password';
+            showPassword.textContent = visible ? 'HIDE' : 'SHOW';
+            showPassword.setAttribute('aria-label', visible ? 'Hide password' : 'Show password');
+        });
+        document.getElementById('loginForm').addEventListener('submit', (event) => {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = passwordInput.value;
+            const notice = document.getElementById('authNotice');
+            if (username === 'Admin' && password === 'Admin') {
+                window.location.href = 'admin.html';
+            } else {
+                notice.classList.add('visible');
+            }
+        });
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBB Admin | Projects & Careers</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --blue: #1479d4;
+            --blue2: #0a5da8;
+            --bg: #f7f9fb;
+            --surface: #ffffff;
+            --text: #111820;
+            --muted: #65717d;
+            --line: #dce3e9;
+            --header: rgba(255, 255, 255, 0.94);
+            --shadow: 0 16px 50px rgba(10, 40, 70, 0.07);
+            --code-bg: #111b26;
+            --code-text: #dceeff;
+        }
+
+        html[data-theme="dark"] {
+            --blue: #36a3ff;
+            --blue2: #0877cf;
+            --bg: #11161b;
+            --surface: #181e24;
+            --text: #f4f7f9;
+            --muted: #a5afb8;
+            --line: #2c353e;
+            --header: rgba(17, 22, 27, 0.94);
+            --shadow: 0 18px 55px rgba(0, 0, 0, 0.28);
+            --code-bg: #0c1218;
+            --code-text: #dceeff;
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: Inter, Arial, sans-serif;
+            transition: background-color 0.25s, color 0.25s;
+        }
+        button, input, textarea, select { font: inherit; }
+        button { cursor: pointer; }
+        a { color: inherit; text-decoration: none; }
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            min-height: 82px;
+            padding: 14px clamp(22px, 5vw, 76px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            background: var(--header);
+            border-bottom: 1px solid var(--line);
+            backdrop-filter: blur(14px);
+        }
+        .brand { display: flex; align-items: center; gap: 10px; }
+        .brand-mark {
+            display: grid;
+            place-items: center;
+            width: 42px;
+            height: 42px;
+            background: var(--blue);
+            color: white;
+            font-family: "Barlow Condensed", sans-serif;
+            font-weight: 800;
+            font-size: 21px;
+            transform: skew(-8deg);
+        }
+        .brand > span:last-child {
+            display: flex;
+            flex-direction: column;
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: 22px;
+            line-height: 0.85;
+            letter-spacing: 0.7px;
+        }
+        .brand small {
+            margin-top: 6px;
+            color: var(--muted);
+            font-size: 9px;
+            letter-spacing: 3px;
+        }
+        .header-right { display: flex; align-items: center; gap: 20px; }
+        .header-caption {
+            color: var(--muted);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.4px;
+            text-transform: uppercase;
+        }
+        .theme-toggle {
+            width: 42px;
+            height: 42px;
+            background: var(--surface);
+            color: var(--text);
+            border: 1px solid var(--line);
+            font-size: 18px;
+        }
+        .moon { display: none; }
+        [data-theme="dark"] .moon { display: inline; }
+        [data-theme="dark"] .sun { display: none; }
+        .container { max-width: 1330px; margin: auto; padding: 0 28px; }
+        .intro { padding-top: 66px; }
+        .eyebrow {
+            margin: 0 0 17px;
+            color: var(--blue);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+        h1, h2, h3 { font-family: "Barlow Condensed", sans-serif; text-transform: uppercase; }
+        h1 {
+            margin: 0;
+            font-size: clamp(58px, 7vw, 90px);
+            line-height: 0.86;
+            letter-spacing: -1px;
+        }
+        h1 span { color: var(--blue); }
+        .sub { color: var(--muted); font-size: 14px; line-height: 1.8; }
+        .intro .sub { max-width: 680px; margin-top: 24px; }
+        .status-note {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 17px 20px;
+            margin: 27px 0 0;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-left: 3px solid var(--blue);
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.65;
+        }
+        .status-note strong { color: var(--text); }
+        .status-dot { color: var(--blue); font-size: 19px; line-height: 1; }
+        .section-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 20px;
+            margin-top: 57px;
+            margin-bottom: 20px;
+        }
+        .section-top h2 { margin: 0; font-size: 34px; line-height: 1; }
+        .section-top .eyebrow { margin-bottom: 10px; }
+        .section-tag { color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: 2px; }
+        .layout { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.85fr); gap: 18px; padding-bottom: 80px; }
+        .panel { background: var(--surface); border: 1px solid var(--line); padding: clamp(22px, 3vw, 36px); box-shadow: var(--shadow); min-width: 0; }
+        .panel-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; border-bottom: 1px solid var(--line); padding-bottom: 19px; margin-bottom: 24px; }
+        .panel h3 { margin: 0; font-size: 28px; }
+        .panel-heading small { color: var(--muted); font-size: 10px; letter-spacing: 1.5px; }
+        label { display: block; margin: 18px 0 8px; font-size: 11px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; }
+        input, textarea, select {
+            width: 100%;
+            background: var(--bg);
+            color: var(--text);
+            border: 1px solid var(--line);
+            border-radius: 0;
+            padding: 13px 14px;
+            outline: none;
+            font-size: 13px;
+        }
+        input:focus, textarea:focus, select:focus { border-color: var(--blue); box-shadow: 0 0 0 2px color-mix(in srgb, var(--blue) 15%, transparent); }
+        input::placeholder, textarea::placeholder { color: var(--muted); opacity: 0.75; }
+        textarea { min-height: 115px; resize: vertical; line-height: 1.6; }
+        .two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 27px; }
+        .btn {
+            border: 1px solid var(--blue);
+            background: var(--blue);
+            color: white;
+            padding: 15px 20px;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .btn:hover { background: var(--blue2); transform: translateY(-2px); }
+        .btn.secondary { color: var(--text); background: var(--surface); border-color: var(--line); }
+        .btn.secondary:hover { color: var(--blue); border-color: var(--blue); }
+        .code-preview { white-space: pre-wrap; overflow-wrap: anywhere; background: var(--code-bg); color: var(--code-text); font: 12px/1.7 ui-monospace, SFMono-Regular, Consolas, monospace; padding: 20px; max-height: 600px; overflow: auto; }
+        .preview-note { margin-bottom: 19px; }
+        .preview-tabs { display: flex; gap: 8px; padding: 0 20px 18px; border-bottom: 1px solid var(--line); }
+        .preview-tab { cursor: pointer; border: 1px solid var(--line); background: var(--surface); color: var(--muted); padding: 11px 15px; font-size: 11px; font-weight: 800; letter-spacing: .6px; text-transform: uppercase; }
+        .preview-tab[aria-selected="true"] { background: var(--blue); border-color: var(--blue); color: white; }
+        .preview-pane[hidden] { display: none; }
+        .website-preview { padding: 20px; }
+        .catalog-preview { border: 1px solid var(--line); background: var(--bg); padding: 20px; }
+        .catalog-eyebrow { color: var(--blue); font-size: 10px; letter-spacing: 2px; font-weight: 800; margin: 0 0 12px; }
+        .catalog-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 37px; line-height: .95; margin: 0 0 20px; }
+        .catalog-title span { color: var(--blue); }
+        .catalog-card { border: 1px solid var(--line); background: var(--surface); overflow: hidden; }
+        .catalog-photo { aspect-ratio: 4/3; background: var(--bg); display: grid; place-items: center; overflow: hidden; border-bottom: 1px solid var(--line); }
+        .catalog-photo img { width: 100%; height: 100%; object-fit: cover; }
+        .catalog-placeholder { color: var(--muted); font-size: 11px; font-weight: 800; letter-spacing: 2px; }
+        .catalog-details { padding: 20px; }
+        .catalog-id { font-size: 11px; letter-spacing: 1px; color: var(--blue); font-weight: 800; }
+        .catalog-name { font: 800 29px/1 'Barlow Condensed', sans-serif; text-transform: uppercase; margin: 10px 0; overflow-wrap: anywhere; }
+        .catalog-location, .catalog-description, .catalog-dates { color: var(--muted); font-size: 12px; line-height: 1.7; overflow-wrap: anywhere; }
+        .catalog-description { white-space: pre-wrap; }
+        .catalog-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 15px; }
+        .catalog-tags span { display: inline-flex; align-items: center; justify-content: center; padding: 9px 12px; background: var(--blue); color: #ffffff; font-size: 10px; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase; border-radius: 3px; }
+        .preview-caption { font-size: 11px; color: var(--muted); margin-top: 13px; line-height: 1.6; }
+
+        .module-nav { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+        .module-nav button { padding: 13px 19px; border: 1px solid var(--line); background: var(--surface); color: var(--text); font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+        .module-nav button[aria-selected="true"] { background: var(--blue); border-color: var(--blue); color: white; }
+        .module[hidden] { display: none; }
+        .field-hint { color: var(--muted); font-size: 12px; line-height: 1.6; }
+        /* Careers page-inspired listing preview */
+        .career-listing-card { background: var(--surface); border: 1px solid var(--line); border-left: 5px solid var(--blue); padding: 25px; min-width: 0; }
+        .job-preview-top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; }
+        .job-preview-heading { font: 700 clamp(27px, 3vw, 38px)/1 'Barlow Condensed', sans-serif; text-transform: uppercase; margin: 0 0 12px; overflow-wrap: anywhere; }
+        .job-preview-location { color: var(--blue); font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; overflow-wrap: anywhere; }
+        .job-preview-status { display: inline-block; padding: 10px 12px; background: var(--bg); border: 1px solid var(--line); color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+        .job-preview-id { color: var(--blue); font-size: 10px; font-weight: 800; letter-spacing: 1px; margin-bottom: 12px; }
+        .job-meta { display: flex; flex-wrap: wrap; gap: 7px; margin: 14px 0; }
+        .job-meta span { font-size: 10px; padding: 7px 9px; border: 1px solid var(--line); color: var(--muted); }
+        .job-preview-pay { display: flex; flex-direction: column; gap: 7px; margin: 23px 0; padding: 20px; background: var(--bg); border: 1px solid var(--line); }
+        .job-preview-pay span { color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+        .job-preview-pay strong { color: var(--blue); font: 700 clamp(24px, 3vw, 34px)/1.15 'Barlow Condensed', sans-serif; overflow-wrap: anywhere; }
+        .job-copy { font-size: 13px; color: var(--muted); line-height: 1.85; white-space: pre-wrap; overflow-wrap: anywhere; }
+        .job-preview-subhead { font: 700 24px/1.1 'Barlow Condensed', sans-serif; text-transform: uppercase; margin: 28px 0 12px; }
+        .job-preview-list { margin: 12px 0 24px; padding-left: 22px; }
+        .job-preview-list li { margin-bottom: 8px; }
+        .job-preview-list li::marker { color: var(--blue); }
+        .job-preview-benefits { margin: 28px 0; padding: 20px 24px; background: var(--bg); border-left: 3px solid var(--blue); }
+        .job-preview-benefits .job-preview-subhead { margin-top: 0; }
+        .job-preview-apply { margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--line); }
+        .job-preview-apply p { margin: 0; }
+        .footer { border-top: 1px solid var(--line); padding: 24px 0 36px; color: var(--muted); font-size: 11px; letter-spacing: 1px; }
+        @media (max-width: 850px) { .layout { grid-template-columns: 1fr; } }
+        @media (max-width: 600px) {
+            .container { padding: 0 18px; }
+            .intro { padding-top: 45px; }
+            .two { grid-template-columns: 1fr; gap: 0; }
+            .header-caption { display: none; }
+            .section-tag { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="https://kohen-blake.github.io/MBB-Test-Site/" aria-label="MBBuilders public website">
+            <span class="brand-mark">MBB</span>
+            <span><strong>MBBUILDERS</strong><small>INC.</small></span>
+        </a>
+        <div class="header-right">
+            <span class="header-caption">Projects & Careers / Prototype</span>
+            <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light and dark mode" title="Toggle light and dark mode">
+                <span class="sun" aria-hidden="true">☀</span>
+                <span class="moon" aria-hidden="true">☾</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="intro">
+            <p class="eyebrow">MBBUILDERS INC. / ADMINISTRATION</p>
+            <h1>WEBSITE<br><span>MANAGEMENT.</span></h1>
+            <p class="sub">Prepare projects and job openings for the MBBuilders website. Preview both before exporting their data.</p>
+            <div class="module-nav" role="tablist" aria-label="Management section">
+                <button type="button" id="moduleProjects" role="tab" aria-selected="true" aria-controls="projectsModule">Projects</button>
+                <button type="button" id="moduleCareers" role="tab" aria-selected="false" aria-controls="careersModule">Job Listings</button>
+            </div>
+            <div class="status-note" role="status">
+                <span class="status-dot" aria-hidden="true">●</span>
+                <div><strong>Local prototype only.</strong> Job listings and projects are not published automatically. GitHub publishing, secure applicant forms, email delivery, login, and resume management are not connected. Exported JSON remains on your computer.</div>
+            </div>
+        </section>
+
+        <section class="module" id="projectsModule" role="tabpanel" aria-labelledby="moduleProjects">
+        <div class="section-top">
+            <div><p class="eyebrow">01 / PROJECT EDITOR</p><h2>New Project</h2></div>
+            <span class="section-tag">MBB / AAA SERIES</span>
+        </div>
+
+        <div class="layout">
+            <section class="panel" aria-labelledby="project-details-heading">
+                <div class="panel-heading"><h3 id="project-details-heading">Project Details</h3><small>01 / INFORMATION</small></div>
+                <form id="form">
+                    <div class="two">
+                        <div>
+                            <label for="identifier">Project Identifier</label>
+                            <input id="identifier" value="AAA00004" pattern="AAA[0-9]{5}" required>
+                        </div>
+                        <div>
+                            <label for="name">Project Name</label>
+                            <input id="name" placeholder="Birmingham Distribution Center" required>
+                        </div>
+                    </div>
+                    <label for="location">Location</label>
+                    <input id="location" placeholder="Birmingham, Alabama">
+                    <div class="two">
+                        <div><label for="startDate">Start Date</label><input id="startDate" type="date"></div>
+                        <div><label for="finishDate">Finish Date</label><input id="finishDate" type="date"></div>
+                    </div>
+                    <label for="description">Project Description</label>
+                    <textarea id="description" placeholder="Describe the work performed..."></textarea>
+                    <label for="tags">Services Performed</label>
+                    <input id="tags" placeholder="Structural Steel, Roof Sheeting">
+                    <p class="sub">Separate services with commas.</p>
+                    <label for="images">Project Photo Paths / URLs</label>
+                    <textarea id="images" placeholder="assets/projects/AAA00004/cover.jpg"></textarea>
+                    <p class="sub">Enter one path or URL per line. Actual photo uploading will be added in the connected version.</p>
+                    <div class="actions">
+                        <button class="btn" type="submit">Update Preview →</button>
+                        <button class="btn secondary" id="export" type="button">Export JSON</button>
+                    </div>
+                </form>
+            </section>
+            <aside class="panel" aria-labelledby="data-preview-heading">
+                <div class="panel-heading"><h3 id="data-preview-heading">Data Preview</h3><small>02 / OUTPUT</small></div>
+                <p class="sub preview-note" style="padding: 0 20px;">Switch between the project card as it would appear on your public catalog and the underlying JSON data.</p>
+                <div class="preview-tabs" role="tablist" aria-label="Project preview type">
+                    <button class="preview-tab" id="tabWebsite" role="tab" type="button" aria-selected="true" aria-controls="websitePane">Website Preview</button>
+                    <button class="preview-tab" id="tabJson" role="tab" type="button" aria-selected="false" aria-controls="jsonPane">JSON Preview</button>
+                </div>
+                <div class="preview-pane" id="websitePane" role="tabpanel" aria-labelledby="tabWebsite">
+                    <div class="website-preview">
+                        <div class="catalog-preview">
+                            <p class="catalog-eyebrow">MBBUILDERS INC. / OUR WORK</p>
+                            <h4 class="catalog-title">CATALOG<br><span>PREVIEW</span></h4>
+                            <article class="catalog-card">
+                                <div class="catalog-photo" id="catalogPhoto"><span class="catalog-placeholder">PROJECT PHOTO</span></div>
+                                <div class="catalog-details">
+                                    <div class="catalog-id" id="catalogId">ID: AAA00004</div>
+                                    <h5 class="catalog-name" id="catalogName">PROJECT NAME</h5>
+                                    <div class="catalog-location" id="catalogLocation">Location to be added</div>
+                                    <p class="catalog-description" id="catalogDescription">Your project description will appear here.</p>
+                                    <p class="catalog-dates" id="catalogDates"></p>
+                                    <div class="catalog-tags" id="catalogTags"></div>
+                                </div>
+                            </article>
+                        </div>
+                        <p class="preview-caption">Approximate visual preview of the project catalog card. This does not publish changes to your website.</p>
+                    </div>
+                </div>
+                <div class="preview-pane" id="jsonPane" role="tabpanel" aria-labelledby="tabJson" hidden>
+                    <pre class="code-preview" id="preview"></pre>
+                </div>
+            </aside>
+        </div>
+        </section>
+
+        <section class="module" id="careersModule" role="tabpanel" aria-labelledby="moduleCareers" hidden>
+            <div class="section-top">
+                <div><p class="eyebrow">02 / CAREERS EDITOR</p><h2>New Job Listing</h2></div>
+                <span class="section-tag">MBB / JOB SERIES</span>
+            </div>
+            <div class="layout">
+                <section class="panel" aria-labelledby="job-details-heading">
+                    <div class="panel-heading"><h3 id="job-details-heading">Job Details</h3><small>01 / INFORMATION</small></div>
+                    <form id="jobForm">
+                        <label for="jobTitle">Job Title</label><input id="jobTitle" placeholder="Structural Steel Erector" required>
+                        <div class="two">
+                            <div><label for="jobLocation">Location</label><input id="jobLocation" placeholder="Central Alabama" required></div>
+                            <div><label for="jobType">Employment Type</label><select id="jobType"><option>Full-Time</option><option>Part-Time</option><option>Contract</option><option>Temporary</option><option>Internship</option></select></div>
+                        </div>
+                        <div class="two">
+                            <div><label for="jobDepartment">Department</label><input id="jobDepartment" placeholder="Field Operations"></div>
+                            <div><label for="jobPay">Pay Range (optional)</label><input id="jobPay" placeholder="$22–$30/hour"></div>
+                        </div>
+                        <div class="two">
+                            <div><label for="jobDeadline">Application Deadline (optional)</label><input id="jobDeadline" type="date"></div>
+                            <div><label for="jobStatus">Listing Status</label><select id="jobStatus"><option value="draft">Draft</option><option value="published">Published (export only)</option><option value="closed">Closed</option></select></div>
+                        </div>
+                        <label for="jobSummary">Position Summary</label><textarea id="jobSummary" placeholder="Describe the opportunity..."></textarea>
+                        <label for="jobResponsibilities">Responsibilities</label><textarea id="jobResponsibilities" placeholder="Enter one responsibility per line"></textarea>
+                        <label for="jobQualifications">Qualifications</label><textarea id="jobQualifications" placeholder="Enter one qualification per line"></textarea>
+                        <label for="jobBenefits">Benefits</label><textarea id="jobBenefits" placeholder="Enter one benefit per line"></textarea>
+                        <label for="jobEmail">Application Email</label><input id="jobEmail" type="email" placeholder="careers@yourcompany.com">
+                        <p class="field-hint">Email applications use this address. Online applications will require a separate secure backend and are not active in this prototype.</p>
+                        <div class="actions">
+                            <button class="btn" type="submit">Update Preview →</button>
+                            <button class="btn secondary" id="jobExport" type="button">Export Job JSON</button>
+                            <button class="btn secondary" id="jobSaveDraft" type="button">Save Local Draft</button>
+                        </div>
+                        <p id="jobSaveMessage" class="field-hint" role="status" aria-live="polite"></p>
+                    </form>
+                </section>
+                <aside class="panel" aria-labelledby="job-preview-heading">
+                    <div class="panel-heading"><h3 id="job-preview-heading">Listing Preview</h3><small>02 / OUTPUT</small></div>
+                    <p class="sub preview-note" style="padding: 0 20px;">See a Careers page approximation or inspect the JSON export. Drafts and closed jobs would not appear on the public site.</p>
+                    <div class="preview-tabs" role="tablist" aria-label="Job preview type">
+                        <button class="preview-tab" id="jobTabWebsite" type="button" role="tab" aria-selected="true" aria-controls="jobWebsitePane">Website Preview</button>
+                        <button class="preview-tab" id="jobTabJson" type="button" role="tab" aria-selected="false" aria-controls="jobJsonPane">JSON Preview</button>
+                    </div>
+                    <div class="preview-pane" id="jobWebsitePane" role="tabpanel" aria-labelledby="jobTabWebsite">
+                        <div class="website-preview"><div class="catalog-preview">
+                            <p class="catalog-eyebrow">MBBUILDERS INC. / CAREERS</p>
+                            <h4 class="catalog-title">Listing<br><span>Preview</span></h4>
+                            <article class="career-listing-card">
+                                <div class="job-preview-top">
+                                    <div>
+                                        <h5 class="job-preview-heading" id="jobViewTitle">JOB TITLE</h5>
+                                        <div class="job-preview-location" id="jobViewLocation">LOCATION / POSITION</div>
+                                    </div>
+                                    <span class="job-preview-status" id="jobViewStatus">DRAFT / NOT LIVE</span>
+                                </div>
+                                <div class="job-meta" id="jobViewMeta"></div>
+                                <div class="job-preview-pay" id="jobViewPay" hidden>
+                                    <span>Pay Range</span>
+                                    <strong id="jobViewPayAmount"></strong>
+                                </div>
+                                <h6 class="job-preview-subhead">Position Overview</h6>
+                                <p class="job-copy" id="jobViewSummary">Position summary will appear here.</p>
+                                <div id="jobViewSections"></div>
+                                <div class="job-preview-apply">
+                                    <p class="job-copy" id="jobViewApply"></p>
+                                </div>
+                            </article>
+                        </div><p class="preview-caption">Illustrative Careers listing only. No applications are collected here, and changing status to Published does not publish the job.</p></div>
+                    </div>
+                    <div class="preview-pane" id="jobJsonPane" role="tabpanel" aria-labelledby="jobTabJson" hidden>
+                        <pre class="code-preview" id="jobJsonPreview"></pre>
+                    </div>
+                </aside>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer"><div class="container">MBBUILDERS INC. / INTERNAL ADMIN PROTOTYPE</div></footer>
+
+    <script>
+        // Match the public website's light/dark mode preference.
+        const root = document.documentElement;
+        const savedTheme = localStorage.getItem('mb-theme');
+        if (savedTheme === 'light' || savedTheme === 'dark') {
+            root.dataset.theme = savedTheme;
+        } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            root.dataset.theme = 'dark';
+        }
+
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+            localStorage.setItem('mb-theme', root.dataset.theme);
+        });
+
+        const form = document.getElementById('form');
+        const preview = document.getElementById('preview');
+
+        function data() {
+            const get = (id) => document.getElementById(id).value.trim();
+            return {
+                identifier: 'ID: ' + get('identifier'),
+                name: get('name'),
+                location: get('location'),
+                description: get('description'),
+                startDate: get('startDate'),
+                finishDate: get('finishDate'),
+                tags: get('tags').split(',').map((s) => s.trim()).filter(Boolean),
+                images: get('images').split('\n').map((s) => s.trim()).filter(Boolean)
+            };
+        }
+
+        const tabWebsite = document.getElementById('tabWebsite');
+        const tabJson = document.getElementById('tabJson');
+        const websitePane = document.getElementById('websitePane');
+        const jsonPane = document.getElementById('jsonPane');
+
+        function selectPreview(type) {
+            const website = type === 'website';
+            tabWebsite.setAttribute('aria-selected', String(website));
+            tabJson.setAttribute('aria-selected', String(!website));
+            websitePane.hidden = !website;
+            jsonPane.hidden = website;
+        }
+        tabWebsite.addEventListener('click', () => selectPreview('website'));
+        tabJson.addEventListener('click', () => selectPreview('json'));
+
+        function updatePreview() {
+            const project = data();
+            preview.textContent = JSON.stringify(project, null, 2);
+            document.getElementById('catalogId').textContent = project.identifier;
+            document.getElementById('catalogName').textContent = project.name || 'PROJECT NAME';
+            document.getElementById('catalogLocation').textContent = project.location || 'Location to be added';
+            document.getElementById('catalogDescription').textContent = project.description || 'Your project description will appear here.';
+            document.getElementById('catalogDates').textContent =
+                [project.startDate && 'Started: ' + project.startDate,
+                 project.finishDate && 'Finished: ' + project.finishDate].filter(Boolean).join('  ·  ');
+
+            const tags = document.getElementById('catalogTags');
+            tags.replaceChildren();
+            project.tags.forEach((tag) => {
+                const span = document.createElement('span');
+                span.textContent = tag;
+                tags.appendChild(span);
+            });
+
+            const photo = document.getElementById('catalogPhoto');
+            photo.replaceChildren();
+            if (project.images.length) {
+                const img = document.createElement('img');
+                img.alt = 'Preview of ' + (project.name || 'project');
+                img.addEventListener('error', () => {
+                    photo.replaceChildren();
+                    const placeholder = document.createElement('span');
+                    placeholder.className = 'catalog-placeholder';
+                    placeholder.textContent = 'PHOTO NOT AVAILABLE';
+                    photo.appendChild(placeholder);
+                }, { once: true });
+                img.src = project.images[0];
+                photo.appendChild(img);
+            } else {
+                const placeholder = document.createElement('span');
+                placeholder.className = 'catalog-placeholder';
+                placeholder.textContent = 'PROJECT PHOTO';
+                photo.appendChild(placeholder);
+            }
+        }
+
+        form.addEventListener('input', updatePreview);
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            updatePreview();
+        });
+        updatePreview();
+
+        document.getElementById('export').addEventListener('click', () => {
+            if (!form.reportValidity()) return;
+            const blob = new Blob([JSON.stringify(data(), null, 2)], { type: 'application/json' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = document.getElementById('identifier').value + '.json';
+            link.click();
+            setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+        });
+
+        // Careers editor: local-only preview, draft storage and JSON export.
+        const moduleButtons = [document.getElementById('moduleProjects'), document.getElementById('moduleCareers')];
+        const modulePanels = [document.getElementById('projectsModule'), document.getElementById('careersModule')];
+        moduleButtons.forEach((button, index) => button.addEventListener('click', () => {
+            moduleButtons.forEach((item, i) => item.setAttribute('aria-selected', String(i === index)));
+            modulePanels.forEach((panel, i) => { panel.hidden = i !== index; });
+        }));
+
+        const jobForm = document.getElementById('jobForm');
+        const jobFields = ['jobTitle', 'jobLocation', 'jobType', 'jobDepartment', 'jobPay',
+            'jobDeadline', 'jobStatus', 'jobSummary', 'jobResponsibilities', 'jobQualifications',
+            'jobBenefits', 'jobEmail'];
+        const jobValue = (id) => document.getElementById(id).value.trim();
+        const jobLines = (id) => jobValue(id).split('\n').map((line) => line.trim()).filter(Boolean);
+
+        function jobData() {
+            return {
+                title: jobValue('jobTitle'),
+                location: jobValue('jobLocation'),
+                employmentType: jobValue('jobType'),
+                department: jobValue('jobDepartment'),
+                payRange: jobValue('jobPay'),
+                applicationDeadline: jobValue('jobDeadline'),
+                status: jobValue('jobStatus'),
+                summary: jobValue('jobSummary'),
+                responsibilities: jobLines('jobResponsibilities'),
+                qualifications: jobLines('jobQualifications'),
+                benefits: jobLines('jobBenefits'),
+                applicationEmail: jobValue('jobEmail'),
+                onlineApplicationsEnabled: false
+            };
+        }
+
+        function selectJobPreview(type) {
+            const website = type === 'website';
+            document.getElementById('jobTabWebsite').setAttribute('aria-selected', String(website));
+            document.getElementById('jobTabJson').setAttribute('aria-selected', String(!website));
+            document.getElementById('jobWebsitePane').hidden = !website;
+            document.getElementById('jobJsonPane').hidden = website;
+        }
+        document.getElementById('jobTabWebsite').addEventListener('click', () => selectJobPreview('website'));
+        document.getElementById('jobTabJson').addEventListener('click', () => selectJobPreview('json'));
+
+        function updateJobPreview() {
+            const job = jobData();
+            document.getElementById('jobJsonPreview').textContent = JSON.stringify(job, null, 2);
+            document.getElementById('jobViewTitle').textContent = job.title || 'JOB TITLE';
+            document.getElementById('jobViewStatus').textContent =
+                job.status === 'published' ? 'PUBLISHED / EXPORT ONLY — NOT LIVE' :
+                job.status === 'closed' ? 'CLOSED / NOT LIVE' : 'DRAFT / NOT LIVE';
+            document.getElementById('jobViewSummary').textContent = job.summary || 'Position summary will appear here.';
+            document.getElementById('jobViewLocation').textContent =
+                [job.location || 'Location to be added', job.department || job.employmentType].filter(Boolean).join(' | ');
+            const pay = document.getElementById('jobViewPay');
+            pay.hidden = !job.payRange;
+            document.getElementById('jobViewPayAmount').textContent = job.payRange;
+            const meta = document.getElementById('jobViewMeta');
+            meta.replaceChildren();
+            [job.employmentType, job.department, job.applicationDeadline && 'Deadline: ' + job.applicationDeadline]
+                .filter(Boolean).forEach((value) => {
+                    const chip = document.createElement('span');
+                    chip.textContent = value;
+                    meta.appendChild(chip);
+                });
+            const sections = document.getElementById('jobViewSections');
+            sections.replaceChildren();
+            [['Key Responsibilities', job.responsibilities], ['Preferred Qualifications', job.qualifications], ['Potential Benefits', job.benefits]]
+                .forEach(([heading, items]) => {
+                    if (!items.length) return;
+                    const wrapper = document.createElement('div');
+                    if (heading === 'Potential Benefits') wrapper.className = 'job-preview-benefits';
+                    const title = document.createElement('h6');
+                    title.className = 'job-preview-subhead';
+                    title.textContent = heading;
+                    const list = document.createElement('ul');
+                    list.className = 'job-copy job-preview-list';
+                    items.forEach((item) => {
+                        const li = document.createElement('li');
+                        li.textContent = item;
+                        list.appendChild(li);
+                    });
+                    wrapper.append(title, list);
+                    sections.appendChild(wrapper);
+                });
+            document.getElementById('jobViewApply').textContent = job.applicationEmail
+                ? 'Apply by email: ' + job.applicationEmail + ' (preview only)'
+                : 'Application contact email not set.';
+        }
+        jobForm.addEventListener('input', updateJobPreview);
+        jobForm.addEventListener('change', updateJobPreview);
+        jobForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            updateJobPreview();
+        });
+        document.getElementById('jobExport').addEventListener('click', () => {
+            if (!jobForm.reportValidity()) return;
+            const blob = new Blob([JSON.stringify(jobData(), null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = (jobValue('jobTitle').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'job-listing') + '.json';
+            link.click();
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
+        });
+        document.getElementById('jobSaveDraft').addEventListener('click', () => {
+            try {
+                const draft = Object.fromEntries(jobFields.map((id) => [id, document.getElementById(id).value]));
+                draft.jobStatus = 'draft';
+                localStorage.setItem('mbb-job-draft', JSON.stringify(draft));
+                document.getElementById('jobStatus').value = 'draft';
+                updateJobPreview();
+                document.getElementById('jobSaveMessage').textContent = 'Draft saved in this browser only (not online).';
+            } catch (error) {
+                document.getElementById('jobSaveMessage').textContent = 'Could not save draft in this browser.';
+            }
+        });
+        try {
+            const savedJob = JSON.parse(localStorage.getItem('mbb-job-draft') || 'null');
+            if (savedJob && typeof savedJob === 'object') {
+                jobFields.forEach((id) => {
+                    if (typeof savedJob[id] === 'string') document.getElementById(id).value = savedJob[id];
+                });
+            }
+        } catch (error) { /* Ignore invalid local drafts. */ }
+        updateJobPreview();
+    </script>
+</body>
+</html>
