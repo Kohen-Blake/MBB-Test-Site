@@ -1007,11 +1007,11 @@
             </div>
             <div class="hero-stats reveal">
                 <div>
-                    <strong>2013</strong>
+                    <strong id="establishedYear">2013</strong>
                     <span>Established</span>
                 </div>
                 <div>
-                    <strong>13</strong>
+                    <strong id="yearsinField">13+</strong>
                     <span>Years in the Field</span>
                 </div>
                 <div>
@@ -1238,7 +1238,7 @@
                 </div>
                 <div class="safety-plan">
                     <a
-                        href="MBB_Safety_Manual_Basic.docx.pdf"
+                        href="/Documents/MBB_Safety_Manual_Basic.docx.pdf"
                         class="btn primary"
                         target="_blank"
                         rel="noopener noreferrer"
@@ -1359,6 +1359,21 @@
                 nextTheme
             );
         });
+
+        /// ========================================
+        /// AUTO YEAR UPDATER
+        /// ========================================
+        const establishedYear = 2013;
+        const currentYear = new Date().getFullYear();
+
+        document.getElementById("establishedYear").textContent = 
+            establishedYear;
+
+        document.getElementById("yearsinField").textContent = 
+            (currentYear - establishedYear) + "+";
+
+
+
         // ========================================
         // MOBILE NAVIGATION
         // ========================================
